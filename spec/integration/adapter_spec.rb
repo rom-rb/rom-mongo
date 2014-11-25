@@ -30,7 +30,7 @@ describe 'Mongo adapter' do
     user_model = Class.new do
       include Virtus.model
 
-      attribute :_id, String
+      attribute :id, String
       attribute :name, String
       attribute :email, String
     end
@@ -38,6 +38,8 @@ describe 'Mongo adapter' do
     setup.mappers do
       define(:users) do
         model(user_model)
+
+        attribute :id, from: '_id'
       end
     end
 
@@ -45,7 +47,7 @@ describe 'Mongo adapter' do
 
     jane = rom.read(:users).by_name('Jane').to_a.first
 
-    expect(jane._id).to eql(rom.schema.users.find(name: 'Jane').one['_id'].to_s)
+    expect(jane.id).to eql(rom.schema.users.find(name: 'Jane').one['_id'].to_s)
     expect(jane.name).to eql('Jane')
     expect(jane.email).to eql('jane@doe.org')
   end
