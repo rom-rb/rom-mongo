@@ -4,8 +4,8 @@ env:
   - CODECLIMATE_REPO_TOKEN=886f3b795e74159719804f8e18b853f4c23a81bd814404e52ec248a0dae6d656
 script: "bundle exec rake spec"
 rvm:
-  - 2.0.0
-  - 2.1.2
+  - 2.0
+  - 2.1
   - rbx-2
   - jruby
   - ruby-head
