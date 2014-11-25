@@ -1,5 +1,7 @@
 language: ruby
 bundler_args: --without yard guard benchmarks
+env:
+  - CODECLIMATE_REPO_TOKEN=886f3b795e74159719804f8e18b853f4c23a81bd814404e52ec248a0dae6d656
 script: "bundle exec rake spec"
 rvm:
   - 2.0.0
