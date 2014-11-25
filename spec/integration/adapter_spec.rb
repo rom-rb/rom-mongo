@@ -3,14 +3,15 @@ require 'spec_helper'
 require 'virtus'
 
 describe 'Mongo adapter' do
-  let(:rom) { ROM.setup(mongo: 'mongo://127.0.0.1:27017/test') }
+  let(:setup) { ROM.setup(mongo: 'mongo://127.0.0.1:27017/test') }
+  let(:rom) { setup.finalize }
 
   after do
     rom.mongo.connection.drop
   end
 
   it 'works' do
-    rom.schema do
+    setup.schema do
       base_relation(:users) do
         repository :mongo
 
@@ -20,13 +21,9 @@ describe 'Mongo adapter' do
       end
     end
 
-    rom.relations do
-      register(:users) do
-
-        def by_name(name)
-          find(name: name)
-        end
-
+    setup.relation(:users) do
+      def by_name(name)
+        find(name: name)
       end
     end
 
@@ -38,7 +35,7 @@ describe 'Mongo adapter' do
       attribute :email, String
     end
 
-    rom.mappers do
+    setup.mappers do
       define(:users) do
         model(user_model)
       end
