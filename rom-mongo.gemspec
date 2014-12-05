@@ -5,7 +5,7 @@ require 'rom/mongo/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "rom-mongo"
-  spec.version       = ROM::Mongo::VERSION
+  spec.version       = ROM::Mongo::VERSION.dup
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
   spec.summary       = %q{MongoDB support for Ruby Object Mapper}
