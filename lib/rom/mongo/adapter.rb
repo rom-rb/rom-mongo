@@ -10,6 +10,10 @@ module ROM
 
       class Dataset
         include Charlatan.new(:collection, kind: Moped::Query)
+
+        def each(&block)
+          collection.find.each(&block)
+        end
       end
 
       def initialize(*args)
@@ -24,6 +28,10 @@ module ROM
 
       def dataset?(name)
         connection.collection_names.include?(name.to_s)
+      end
+
+      def command_namespace
+        Mongo::Commands
       end
 
       ROM::Adapter.register(self)
