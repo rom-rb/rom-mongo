@@ -22,8 +22,8 @@ module ROM
         Dataset.new(connection[name])
       end
 
-      def schema
-        []
+      def dataset?(name)
+        connection.collection_names.include?(name.to_s)
       end
 
       ROM::Adapter.register(self)
