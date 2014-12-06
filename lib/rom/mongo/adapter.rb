@@ -2,7 +2,6 @@ module ROM
   module Mongo
 
     class Adapter < ROM::Adapter
-      attr_reader :connection
 
       def self.schemes
         [:mongo]
