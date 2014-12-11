@@ -76,6 +76,16 @@ describe 'Mongo adapter' do
     end
   end
 
+  describe 'dataset#header' do
+    it 'returns the header defined in the schema' do
+      expect(rom.relations.users.header).to eql(['_id', 'name', 'email'])
+
+      users = rom.relations.users.find('name' => 'Jane').select(['email'])
+
+      expect(users.header).to eql(['email'])
+    end
+  end
+
   describe 'commands' do
     let(:commands) { rom.command(:users) }
 

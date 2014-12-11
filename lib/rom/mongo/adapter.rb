@@ -7,22 +7,53 @@ module ROM
         [:mongo]
       end
 
+      module RelationInclusion
+
+        def header
+          dataset.header
+        end
+
+      end
+
       class Dataset
         include Charlatan.new(:collection, kind: Moped::Query)
+        include Equalizer.new(:collection, :header)
+
+        alias_method :query, :collection
+
+        def initialize(collection, header)
+          super
+          @header = header unless query?
+        end
+
+        def header
+          query? ? query.operation.fields : @header
+        end
 
         def each(&block)
           collection.find.each(&block)
         end
+
+        def query?
+          collection.kind_of?(Moped::Query)
+        end
       end
+
+      attr_reader :collections
 
       def initialize(*args)
         super
         @connection = Moped::Session.new(["#{uri.host}:#{uri.port}"])
         @connection.use uri.path.gsub('/', '')
+        @collections = {}
       end
 
       def [](name)
-        Dataset.new(connection[name])
+        collections.fetch(name)
+      end
+
+      def dataset(name, header)
+        collections[name] = Dataset.new(connection[name], header)
       end
 
       def dataset?(name)
@@ -31,6 +62,10 @@ module ROM
 
       def command_namespace
         Mongo::Commands
+      end
+
+      def extend_relation_class(klass)
+        klass.send(:include, RelationInclusion)
       end
 
       ROM::Adapter.register(self)
