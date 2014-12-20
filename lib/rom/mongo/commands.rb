@@ -2,9 +2,7 @@ require 'bson'
 
 module ROM
   module Mongo
-
     module Commands
-
       class Create < ROM::Commands::Create
         alias_method :collection, :relation
 
@@ -31,7 +29,6 @@ module ROM
           removed
         end
       end
-
     end
   end
 end

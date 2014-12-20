@@ -1,17 +1,14 @@
 module ROM
   module Mongo
-
     class Adapter < ROM::Adapter
       def self.schemes
         [:mongo]
       end
 
       module RelationInclusion
-
         def header
           dataset.header
         end
-
       end
 
       class Dataset
@@ -69,6 +66,5 @@ module ROM
 
       ROM::Adapter.register(self)
     end
-
   end
 end
