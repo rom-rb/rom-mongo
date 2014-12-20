@@ -2,7 +2,6 @@ module ROM
   module Mongo
 
     class Adapter < ROM::Adapter
-
       def self.schemes
         [:mongo]
       end
