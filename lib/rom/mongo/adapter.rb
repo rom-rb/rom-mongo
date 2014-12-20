@@ -35,7 +35,7 @@ module ROM
         end
 
         def query?
-          collection.kind_of?(Moped::Query)
+          collection.is_a?(Moped::Query)
         end
       end
 
