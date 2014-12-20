@@ -1,0 +1,20 @@
+# Documentation checked by Inch CI
+Style/Documentation:
+  Enabled: false
+
+# This is a shim file for those who require 'rom-mongo'
+Style/FileName:
+  Exclude:
+    - lib/rom-mongo.rb
+
+# Even a single escaped slash can be confusing
+Style/RegexpLiteral:
+  MaxSlashes: 0
+
+# Accept both single and double quotes
+Style/StringLiterals:
+  Enabled: false
+
+# %w makes more sense with 4+ elements
+Style/WordArray:
+  MinSize: 3
