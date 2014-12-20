@@ -60,7 +60,8 @@ describe 'Mongo adapter' do
     it 'returns mapped object' do
       jane = rom.read(:users).by_name('Jane').to_a.first
 
-      expect(jane.id).to eql(rom.schema.users.find(name: 'Jane').one['_id'].to_s)
+      expect(jane.id)
+        .to eql(rom.schema.users.find(name: 'Jane').one['_id'].to_s)
       expect(jane.name).to eql('Jane')
       expect(jane.email).to eql('jane@doe.org')
     end
@@ -93,9 +94,12 @@ describe 'Mongo adapter' do
       it 'inserts a document into collection' do
         id = BSON::ObjectId.new
 
-        result = commands.try { create(_id: id, name: 'joe', email: 'joe@doe.org') }
+        result = commands.try do
+          create(_id: id, name: 'joe', email: 'joe@doe.org')
+        end
 
-        expect(result).to match_array([{ _id: id, name: 'joe', email: 'joe@doe.org' }])
+        expect(result)
+          .to match_array([{ _id: id, name: 'joe', email: 'joe@doe.org' }])
       end
     end
 
@@ -103,7 +107,9 @@ describe 'Mongo adapter' do
       it 'updates a document in the collection' do
         jane = rom.read(:users).by_name('Jane').first
 
-        result = commands.try { update(:by_name, 'Jane').set(email: 'jane.doe@test.com') }
+        result = commands.try do
+          update(:by_name, 'Jane').set(email: 'jane.doe@test.com')
+        end
 
         expect(result).to match_array(
           [{ '_id' => BSON::ObjectId.from_string(jane.id),
