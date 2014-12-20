@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ROM::Mongo::VERSION.dup
   spec.authors       = ["Piotr Solnica"]
   spec.email         = ["piotr.solnica@gmail.com"]
-  spec.summary       = %q{MongoDB support for Ruby Object Mapper}
+  spec.summary       = %q(MongoDB support for Ruby Object Mapper)
   spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
