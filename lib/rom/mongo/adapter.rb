@@ -1,18 +1,14 @@
 module ROM
   module Mongo
-
     class Adapter < ROM::Adapter
-
       def self.schemes
         [:mongo]
       end
 
       module RelationInclusion
-
         def header
           dataset.header
         end
-
       end
 
       class Dataset
@@ -35,7 +31,7 @@ module ROM
         end
 
         def query?
-          collection.kind_of?(Moped::Query)
+          collection.is_a?(Moped::Query)
         end
       end
 
@@ -70,6 +66,5 @@ module ROM
 
       ROM::Adapter.register(self)
     end
-
   end
 end
