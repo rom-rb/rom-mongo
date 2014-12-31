@@ -63,8 +63,6 @@ module ROM
       def extend_relation_class(klass)
         klass.send(:include, RelationInclusion)
       end
-
-      ROM::Adapter.register(self)
     end
   end
 end

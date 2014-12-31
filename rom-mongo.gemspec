@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "moped"
-  spec.add_runtime_dependency "rom", "~> 0.4", ">= 0.4.0"
+  spec.add_runtime_dependency "rom", "~> 0.5", ">= 0.5.0"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

@@ -26,6 +26,10 @@ describe 'Mongo adapter' do
       def by_name(name)
         find(name: name)
       end
+
+      def all
+        find
+      end
     end
 
     setup.commands(:users) do
@@ -124,7 +128,7 @@ describe 'Mongo adapter' do
         jane = rom.read(:users).by_name('Jane').first
         joe = rom.read(:users).by_name('Joe').first
 
-        result = commands.try { delete(:by_name, 'Joe').execute }
+        result = commands.try { delete(:by_name, 'Joe') }
 
         expect(result).to match_array(
           [{ '_id' => BSON::ObjectId.from_string(joe.id),
@@ -132,7 +136,7 @@ describe 'Mongo adapter' do
              'email' => 'joe@doe.org' }]
         )
 
-        expect(rom.read(:users).to_a).to eql([jane])
+        expect(rom.read(:users).all).to match_array([jane])
       end
     end
   end
