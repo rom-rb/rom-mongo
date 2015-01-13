@@ -1,5 +1,7 @@
 require 'bson'
 
+require 'rom/commands'
+
 module ROM
   module Mongo
     module Commands

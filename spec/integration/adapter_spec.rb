@@ -5,23 +5,13 @@ require 'virtus'
 describe 'Mongo adapter' do
   subject(:rom) { setup.finalize }
 
-  let(:setup) { ROM.setup(mongo: 'mongo://127.0.0.1:27017/test') }
+  let(:setup) { ROM.setup('mongo://127.0.0.1:27017/test') }
 
   after do
-    rom.mongo.connection.drop
+    rom.default.adapter.connection.drop
   end
 
   before do
-    setup.schema do
-      base_relation(:users) do
-        repository :mongo
-
-        attribute '_id'
-        attribute 'name'
-        attribute 'email'
-      end
-    end
-
     setup.relation(:users) do
       def by_name(name)
         find(name: name)
@@ -53,11 +43,13 @@ describe 'Mongo adapter' do
         model(user_model)
 
         attribute :id, from: '_id'
+        attribute :name, from: 'name'
+        attribute :email, from: 'email'
       end
     end
 
-    rom.schema.users.insert(name: 'Jane', email: 'jane@doe.org')
-    rom.schema.users.insert(name: 'Joe', email: 'joe@doe.org')
+    rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
+    rom.relations.users.insert(name: 'Joe', email: 'joe@doe.org')
   end
 
   describe 'env#read' do
@@ -65,7 +57,7 @@ describe 'Mongo adapter' do
       jane = rom.read(:users).by_name('Jane').to_a.first
 
       expect(jane.id)
-        .to eql(rom.schema.users.find(name: 'Jane').one['_id'].to_s)
+        .to eql(rom.relations.users.find(name: 'Jane').one['_id'].to_s)
       expect(jane.name).to eql('Jane')
       expect(jane.email).to eql('jane@doe.org')
     end
@@ -73,21 +65,11 @@ describe 'Mongo adapter' do
 
   describe 'adapter#dataset?' do
     it 'returns true if a collection exists' do
-      expect(rom.mongo.adapter.dataset?(:users)).to be(true)
+      expect(rom.default.adapter.dataset?(:users)).to be(true)
     end
 
     it 'returns false if a does not collection exist' do
-      expect(rom.mongo.adapter.dataset?(:not_here)).to be(false)
-    end
-  end
-
-  describe 'dataset#header' do
-    it 'returns the header defined in the schema' do
-      expect(rom.relations.users.header).to eql(['_id', 'name', 'email'])
-
-      users = rom.relations.users.find('name' => 'Jane').select(['email'])
-
-      expect(users.header).to eql(['email'])
+      expect(rom.default.adapter.dataset?(:not_here)).to be(false)
     end
   end
 
