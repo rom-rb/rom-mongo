@@ -6,9 +6,10 @@ describe 'Mongo adapter' do
   subject(:rom) { setup.finalize }
 
   let(:setup) { ROM.setup('mongo://127.0.0.1:27017/test') }
+  let(:adapter) { rom.repositories[:default].adapter }
 
   after do
-    rom.default.adapter.connection.drop
+    adapter.connection.drop
   end
 
   before do
@@ -65,11 +66,11 @@ describe 'Mongo adapter' do
 
   describe 'adapter#dataset?' do
     it 'returns true if a collection exists' do
-      expect(rom.default.adapter.dataset?(:users)).to be(true)
+      expect(adapter.dataset?(:users)).to be(true)
     end
 
     it 'returns false if a does not collection exist' do
-      expect(rom.default.adapter.dataset?(:not_here)).to be(false)
+      expect(adapter.dataset?(:not_here)).to be(false)
     end
   end
 
