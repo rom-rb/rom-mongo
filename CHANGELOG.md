@@ -1,3 +1,9 @@
+## v0.1.0 to-be-released
+
+### Changed
+
+* Updated to work with latest ROM (splattael)
+
 ## v0.0.3 2014-12-31
 
 ### Added
