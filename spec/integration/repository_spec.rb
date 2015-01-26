@@ -2,14 +2,14 @@ require 'spec_helper'
 
 require 'virtus'
 
-describe 'Mongo adapter' do
+describe 'Mongo repository' do
   subject(:rom) { setup.finalize }
 
-  let(:setup) { ROM.setup('mongo://127.0.0.1:27017/test') }
-  let(:adapter) { rom.repositories[:default].adapter }
+  let(:setup) { ROM.setup(:mongo, '127.0.0.1:27017/test') }
+  let(:repository) { rom.repositories[:default] }
 
   after do
-    adapter.connection.drop
+    repository.connection.drop
   end
 
   before do
@@ -64,13 +64,13 @@ describe 'Mongo adapter' do
     end
   end
 
-  describe 'adapter#dataset?' do
+  describe 'repository#dataset?' do
     it 'returns true if a collection exists' do
-      expect(adapter.dataset?(:users)).to be(true)
+      expect(repository.dataset?(:users)).to be(true)
     end
 
     it 'returns false if a does not collection exist' do
-      expect(adapter.dataset?(:not_here)).to be(false)
+      expect(repository.dataset?(:not_here)).to be(false)
     end
   end
 

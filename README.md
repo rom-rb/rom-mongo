@@ -33,7 +33,7 @@ Or install it yourself as:
 
 ## Usage
 
-See `spec/integration/adapter_spec.rb` for a sample usage.
+See `spec/integration/repository_spec.rb` for a sample usage.
 
 ## License
 

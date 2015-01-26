@@ -1,22 +1,20 @@
 require 'moped'
+require 'uri'
 
-require 'rom/adapter'
+require 'rom/repository'
 
 require 'rom/mongo/dataset'
 require 'rom/mongo/commands'
 
 module ROM
   module Mongo
-    class Adapter < ROM::Adapter
-      def self.schemes
-        [:mongo]
-      end
-
+    class Repository < ROM::Repository
       attr_reader :collections
 
-      def setup
-        @connection = Moped::Session.new(["#{uri.host}:#{uri.port}"])
-        @connection.use uri.path.gsub('/', '')
+      def initialize(uri)
+        host, database = uri.split('/')
+        @connection = Moped::Session.new([ host ])
+        @connection.use database
         @collections = {}
       end
 
