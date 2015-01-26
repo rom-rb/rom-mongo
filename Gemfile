@@ -8,3 +8,11 @@ group :test do
   gem 'codeclimate-test-reporter', require: false
   gem 'virtus'
 end
+
+group :tools do
+  gem 'rubocop'
+
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-rubocop'
+end

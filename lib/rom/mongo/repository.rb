@@ -13,7 +13,7 @@ module ROM
 
       def initialize(uri)
         host, database = uri.split('/')
-        @connection = Moped::Session.new([ host ])
+        @connection = Moped::Session.new([host])
         @connection.use database
         @collections = {}
       end
