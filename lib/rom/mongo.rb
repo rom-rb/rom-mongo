@@ -1,3 +1,5 @@
+require 'rom'
+
 require 'rom/mongo/version'
 require 'rom/mongo/repository'
 
