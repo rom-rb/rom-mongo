@@ -5,8 +5,12 @@ require 'rom/commands'
 module ROM
   module Mongo
     module Commands
-      class Create < ROM::Commands::Create
-        alias_method :collection, :relation
+      module Create
+        include ROM::Commands::Create
+
+        def collection
+          relation
+        end
 
         def execute(document)
           collection.insert(document)
@@ -14,9 +18,12 @@ module ROM
         end
       end
 
-      class Update < ROM::Commands::Update
-        alias_method :set, :call
-        alias_method :collection, :relation
+      module Update
+        include ROM::Commands::Update
+
+        def collection
+          relation
+        end
 
         def execute(attributes)
           collection.update_all('$set' => attributes)
@@ -24,7 +31,9 @@ module ROM
         end
       end
 
-      class Delete < ROM::Commands::Delete
+      module Delete
+        include ROM::Commands::Delete
+
         def execute
           removed = target.to_a
           target.remove_all

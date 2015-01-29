@@ -55,7 +55,7 @@ describe 'Mongo repository' do
 
   describe 'env#read' do
     it 'returns mapped object' do
-      jane = rom.read(:users).by_name('Jane').to_a.first
+      jane = rom.read(:users).by_name('Jane').one!
 
       expect(jane.id)
         .to eql(rom.relations.users.find(name: 'Jane').one['_id'].to_s)
@@ -92,7 +92,7 @@ describe 'Mongo repository' do
 
     describe 'update' do
       it 'updates a document in the collection' do
-        jane = rom.read(:users).by_name('Jane').first
+        jane = rom.read(:users).by_name('Jane').one!
 
         result = commands.try do
           update(:by_name, 'Jane').set(email: 'jane.doe@test.com')
@@ -108,8 +108,8 @@ describe 'Mongo repository' do
 
     describe 'delete' do
       it 'deletes documents from the collection' do
-        jane = rom.read(:users).by_name('Jane').first
-        joe = rom.read(:users).by_name('Joe').first
+        jane = rom.read(:users).by_name('Jane').one!
+        joe = rom.read(:users).by_name('Joe').one!
 
         result = commands.try { delete(:by_name, 'Joe') }
 
