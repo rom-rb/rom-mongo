@@ -5,9 +5,7 @@ require 'rom/commands'
 module ROM
   module Mongo
     module Commands
-      module Create
-        include ROM::Commands::Create
-
+      class Create < ROM::Commands::Create
         def collection
           relation
         end
@@ -18,9 +16,7 @@ module ROM
         end
       end
 
-      module Update
-        include ROM::Commands::Update
-
+      class Update < ROM::Commands::Update
         def collection
           relation
         end
@@ -31,9 +27,7 @@ module ROM
         end
       end
 
-      module Delete
-        include ROM::Commands::Delete
-
+      class Delete < ROM::Commands::Delete
         def execute
           removed = target.to_a
           target.remove_all
