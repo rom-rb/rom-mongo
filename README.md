@@ -33,8 +33,8 @@ Or install it yourself as:
 
 ## Usage
 
-See `spec/integration/repository_spec.rb` for a sample usage.
+See [spec/integration/repository_spec.rb](spec/integration/repository_spec.rb) for a sample usage.
 
 ## License
 
-See `LICENSE` file.
+See [LICENSE](LICENSE) file.
