@@ -7,7 +7,7 @@ module ROM
     module Commands
       class Create < ROM::Commands::Create
         def collection
-          relation
+          relation.dataset
         end
 
         def execute(document)
@@ -18,7 +18,7 @@ module ROM
 
       class Update < ROM::Commands::Update
         def collection
-          relation
+          relation.dataset
         end
 
         def execute(attributes)
@@ -30,7 +30,7 @@ module ROM
       class Delete < ROM::Commands::Delete
         def execute
           removed = target.to_a
-          target.remove_all
+          target.dataset.remove_all
           removed
         end
       end

@@ -9,12 +9,7 @@ require 'rom/mongo/commands'
 module ROM
   module Mongo
     class Relation < ROM::Relation
-      def exposed_relations
-        super + (dataset.public_methods & public_methods) -
-          Object.public_instance_methods -
-          ROM::Relation.public_instance_methods -
-          Mongo::Relation.public_instance_methods
-      end
+      forward :insert, :find
     end
 
     class Repository < ROM::Repository

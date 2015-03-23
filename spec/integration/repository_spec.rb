@@ -43,6 +43,8 @@ describe 'Mongo repository' do
       define(:users) do
         model(user_model)
 
+        register_as :model
+
         attribute :id, from: '_id'
         attribute :name, from: 'name'
         attribute :email, from: 'email'
@@ -53,12 +55,12 @@ describe 'Mongo repository' do
     rom.relations.users.insert(name: 'Joe', email: 'joe@doe.org')
   end
 
-  describe 'env#read' do
+  describe 'env#relation' do
     it 'returns mapped object' do
-      jane = rom.read(:users).by_name('Jane').one!
+      jane = rom.relation(:users).as(:model).by_name('Jane').one!
 
       expect(jane.id)
-        .to eql(rom.relations.users.find(name: 'Jane').one['_id'].to_s)
+        .to eql(rom.relation(:users) { |r| r.find(name: 'Jane') }.one['_id'].to_s)
       expect(jane.name).to eql('Jane')
       expect(jane.email).to eql('jane@doe.org')
     end
@@ -82,7 +84,7 @@ describe 'Mongo repository' do
         id = BSON::ObjectId.new
 
         result = commands.try do
-          create(_id: id, name: 'joe', email: 'joe@doe.org')
+          commands.create.call(_id: id, name: 'joe', email: 'joe@doe.org')
         end
 
         expect(result)
@@ -92,10 +94,10 @@ describe 'Mongo repository' do
 
     describe 'update' do
       it 'updates a document in the collection' do
-        jane = rom.read(:users).by_name('Jane').one!
+        jane = rom.relation(:users).as(:model).by_name('Jane').one!
 
         result = commands.try do
-          update(:by_name, 'Jane').set(email: 'jane.doe@test.com')
+          commands.update.by_name('Jane').set(email: 'jane.doe@test.com')
         end
 
         expect(result).to match_array(
@@ -108,10 +110,10 @@ describe 'Mongo repository' do
 
     describe 'delete' do
       it 'deletes documents from the collection' do
-        jane = rom.read(:users).by_name('Jane').one!
-        joe = rom.read(:users).by_name('Joe').one!
+        jane = rom.relation(:users).as(:model).by_name('Jane').one!
+        joe = rom.relation(:users).as(:model).by_name('Joe').one!
 
-        result = commands.try { delete(:by_name, 'Joe') }
+        result = commands.try { commands.delete.by_name('Joe') }
 
         expect(result).to match_array(
           [{ '_id' => BSON::ObjectId.from_string(joe.id),
@@ -119,7 +121,7 @@ describe 'Mongo repository' do
              'email' => 'joe@doe.org' }]
         )
 
-        expect(rom.read(:users).all).to match_array([jane])
+        expect(rom.relation(:users).as(:model).all).to match_array([jane])
       end
     end
   end
