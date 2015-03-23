@@ -1,4 +1,6 @@
-## v0.1.0 to-be-released
+## v0.1.0 2014-12-23
+
+Update to work with ROM 0.6.0
 
 ### Changed
 
