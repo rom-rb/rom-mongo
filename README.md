@@ -35,6 +35,9 @@ Or install it yourself as:
 
 See [spec/integration/repository_spec.rb](spec/integration/repository_spec.rb) for a sample usage.
 
+## Bugs
+Bugs should be reported in the main ROM repository, [https://github.com/rom-rb/rom/issues](https://github.com/rom-rb/rom/issues)
+
 ## License
 
 See [LICENSE](LICENSE) file.
