@@ -9,7 +9,7 @@ describe 'Mongo gateway' do
   let(:gateway) { rom.gateways[:default] }
 
   after do
-    gateway.connection.drop
+    gateway.connection.database.drop
   end
 
   before do
