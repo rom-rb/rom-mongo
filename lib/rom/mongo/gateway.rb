@@ -1,18 +1,14 @@
 require 'moped'
 require 'uri'
 
-require 'rom/repository'
+require 'rom/gateway'
 
 require 'rom/mongo/dataset'
 require 'rom/mongo/commands'
 
 module ROM
   module Mongo
-    class Relation < ROM::Relation
-      forward :insert, :find
-    end
-
-    class Repository < ROM::Repository
+    class Gateway < ROM::Gateway
       attr_reader :collections
 
       def initialize(uri)

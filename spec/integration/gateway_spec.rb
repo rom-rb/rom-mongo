@@ -2,14 +2,14 @@ require 'spec_helper'
 
 require 'virtus'
 
-describe 'Mongo repository' do
+describe 'Mongo gateway' do
   subject(:rom) { setup.finalize }
 
   let(:setup) { ROM.setup(:mongo, '127.0.0.1:27017/test') }
-  let(:repository) { rom.repositories[:default] }
+  let(:gateway) { rom.gateways[:default] }
 
   after do
-    repository.connection.drop
+    gateway.connection.drop
   end
 
   before do
@@ -66,13 +66,13 @@ describe 'Mongo repository' do
     end
   end
 
-  describe 'repository#dataset?' do
+  describe 'gateway#dataset?' do
     it 'returns true if a collection exists' do
-      expect(repository.dataset?(:users)).to be(true)
+      expect(gateway.dataset?(:users)).to be(true)
     end
 
     it 'returns false if a does not collection exist' do
-      expect(repository.dataset?(:not_here)).to be(false)
+      expect(gateway.dataset?(:not_here)).to be(false)
     end
   end
 
@@ -97,7 +97,7 @@ describe 'Mongo repository' do
         jane = rom.relation(:users).as(:model).by_name('Jane').one!
 
         result = commands.try do
-          commands.update.by_name('Jane').set(email: 'jane.doe@test.com')
+          commands.update.by_name('Jane').call(email: 'jane.doe@test.com')
         end
 
         expect(result).to match_array(

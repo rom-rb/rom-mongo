@@ -1,6 +1,7 @@
 require 'rom'
 
 require 'rom/mongo/version'
-require 'rom/mongo/repository'
+require 'rom/mongo/relation'
+require 'rom/mongo/gateway'
 
 ROM.register_adapter(:mongo, ROM::Mongo)
