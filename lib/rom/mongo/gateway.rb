@@ -1,4 +1,4 @@
-require 'moped'
+require 'mongo'
 require 'uri'
 
 require 'rom/gateway'
@@ -13,8 +13,7 @@ module ROM
 
       def initialize(uri)
         host, database = uri.split('/')
-        @connection = Moped::Session.new([host])
-        @connection.use database
+        @connection = ::Mongo::Client.new([host], database: database)
         @collections = {}
       end
 
@@ -27,7 +26,7 @@ module ROM
       end
 
       def dataset?(name)
-        connection.collection_names.include?(name.to_s)
+        connection.database.collection_names.include?(name.to_s)
       end
 
       def command_namespace
