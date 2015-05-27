@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "charlatan"
   spec.add_runtime_dependency "rom", "~> 0.7", ">= 0.7.0"
   spec.add_runtime_dependency "mongo", "~> 2.0.0"
+  spec.add_runtime_dependency "origin"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
