@@ -33,7 +33,7 @@ Or install it yourself as:
 
 ## Usage
 
-See [spec/integration/repository_spec.rb](spec/integration/repository_spec.rb) for a sample usage.
+See [spec/integration/gateway_spec.rb](spec/integration/gateway_spec.rb) for a sample usage.
 
 ## Issues
 Issues should be reported in the main ROM repository, [https://github.com/rom-rb/rom/issues](https://github.com/rom-rb/rom/issues)
