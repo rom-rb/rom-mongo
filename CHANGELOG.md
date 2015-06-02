@@ -1,3 +1,12 @@
+## v0.1.1 to-be-release
+
+### Changed
+
+* Updated to use official mongo driver (kwando)
+* `Dataset` uses origin's querable interface now rather than forwarding to collection (kwando)
+
+[Compare v0.1.0...HEAD](https://github.com/rom-rb/rom-mongo/compare/v0.1.0...HEAD)
+
 ## v0.1.0 2014-12-23
 
 Update to work with ROM 0.6.0
