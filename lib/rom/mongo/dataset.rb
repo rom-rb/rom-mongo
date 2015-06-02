@@ -14,6 +14,8 @@ module ROM
 
       attr_reader :collection
 
+      attr_reader :criteria
+
       def find(criteria = {})
         Dataset.new(collection, Criteria.new.where(criteria))
       end
@@ -40,28 +42,29 @@ module ROM
       end
 
       def where(doc)
-        dataset(@criteria.where(doc))
+        dataset(criteria.where(doc))
       end
 
       def only(fields)
-        dataset(@criteria.only(fields))
+        dataset(criteria.only(fields))
       end
 
       def without(fields)
-        dataset(@criteria.without(fields))
+        dataset(criteria.without(fields))
       end
 
       def limit(limit)
-        dataset(@criteria.limit(limit))
+        dataset(criteria.limit(limit))
       end
 
       def skip(value)
-        dataset(@criteria.skip(value))
+        dataset(criteria.skip(value))
       end
 
       private
+
       def view
-        with_options(collection.find(@criteria.selector), @criteria.options)
+        with_options(collection.find(criteria.selector), criteria.options)
       end
 
       def dataset(criteria)
