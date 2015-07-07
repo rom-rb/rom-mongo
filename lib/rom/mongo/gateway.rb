@@ -12,29 +12,7 @@ module ROM
       attr_reader :collections
 
       def initialize(uri)
-        creds, host_uri = uri.split('@')
-        user, password = creds.split(':')
-
-        if host_uri
-          host, database = host_uri.split('/')
-
-          options = {
-            database: database
-          }
-
-          if user
-            options[:user] = user
-          end
-
-          if password
-            options[:password] = password
-          end
-        else
-          host, database = uri.split('/')
-          options = { database: database }
-        end
-
-        @connection = ::Mongo::Client.new([host], options)
+        @connection = ::Mongo::Client.new(uri)
         @collections = {}
       end
 
