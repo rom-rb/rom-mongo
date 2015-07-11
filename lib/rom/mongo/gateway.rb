@@ -12,8 +12,7 @@ module ROM
       attr_reader :collections
 
       def initialize(uri)
-        host, database = uri.split('/')
-        @connection = ::Mongo::Client.new([host], database: database)
+        @connection = ::Mongo::Client.new(uri)
         @collections = {}
       end
 

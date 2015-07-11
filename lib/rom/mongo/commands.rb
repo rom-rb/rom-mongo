@@ -29,8 +29,8 @@ module ROM
 
       class Delete < ROM::Commands::Delete
         def execute
-          removed = target.to_a
-          target.dataset.remove_all
+          removed = relation.to_a
+          relation.dataset.remove_all
           removed
         end
       end

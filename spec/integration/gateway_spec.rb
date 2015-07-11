@@ -5,7 +5,7 @@ require 'virtus'
 describe 'Mongo gateway' do
   subject(:rom) { setup.finalize }
 
-  let(:setup) { ROM.setup(:mongo, '127.0.0.1:27017/test') }
+  let(:setup) { ROM.setup(:mongo, 'mongodb://127.0.0.1:27017/test') }
   let(:gateway) { rom.gateways[:default] }
 
   after do
