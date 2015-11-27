@@ -3,17 +3,17 @@ require 'spec_helper'
 require 'virtus'
 
 describe 'Mongo gateway' do
-  subject(:rom) { setup.finalize }
+  subject(:container) { ROM.container(configuration) }
 
-  let(:setup) { ROM.setup(:mongo, 'mongodb://127.0.0.1:27017/test') }
-  let(:gateway) { rom.gateways[:default] }
+  let(:configuration) { ROM::Configuration.new(:mongo, 'mongodb://127.0.0.1:27017/test').use(:macros) }
+  let(:gateway) { container.gateways[:default] }
 
   after do
     gateway.connection.database.drop
   end
 
   before do
-    setup.relation(:users) do
+    configuration.relation(:users) do
       def by_name(name)
         find(name: name)
       end
@@ -23,7 +23,7 @@ describe 'Mongo gateway' do
       end
     end
 
-    setup.commands(:users) do
+    configuration.commands(:users) do
       define(:create)
       define(:update)
       define(:delete)
@@ -39,7 +39,7 @@ describe 'Mongo gateway' do
       end
     end
 
-    setup.mappers do
+    configuration.mappers do
       define(:users) do
         model(user_model)
 
@@ -51,16 +51,16 @@ describe 'Mongo gateway' do
       end
     end
 
-    rom.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
-    rom.relations.users.insert(name: 'Joe', email: 'joe@doe.org')
+    container.relations.users.insert(name: 'Jane', email: 'jane@doe.org')
+    container.relations.users.insert(name: 'Joe', email: 'joe@doe.org')
   end
 
   describe 'env#relation' do
     it 'returns mapped object' do
-      jane = rom.relation(:users).as(:model).by_name('Jane').one!
+      jane = container.relation(:users).as(:model).by_name('Jane').one!
 
       expect(jane.id)
-        .to eql(rom.relation(:users) { |r| r.find(name: 'Jane') }.one['_id'].to_s)
+        .to eql(container.relation(:users) { |r| r.find(name: 'Jane') }.one['_id'].to_s)
       expect(jane.name).to eql('Jane')
       expect(jane.email).to eql('jane@doe.org')
     end
@@ -77,7 +77,7 @@ describe 'Mongo gateway' do
   end
 
   describe 'commands' do
-    let(:commands) { rom.command(:users) }
+    let(:commands) { container.command(:users) }
 
     describe 'create' do
       it 'inserts a document into collection' do
@@ -94,7 +94,7 @@ describe 'Mongo gateway' do
 
     describe 'update' do
       it 'updates a document in the collection' do
-        jane = rom.relation(:users).as(:model).by_name('Jane').one!
+        jane = container.relation(:users).as(:model).by_name('Jane').one!
 
         result = commands.try do
           commands.update.by_name('Jane').call(email: 'jane.doe@test.com')
@@ -110,8 +110,8 @@ describe 'Mongo gateway' do
 
     describe 'delete' do
       it 'deletes documents from the collection' do
-        jane = rom.relation(:users).as(:model).by_name('Jane').one!
-        joe = rom.relation(:users).as(:model).by_name('Joe').one!
+        jane = container.relation(:users).as(:model).by_name('Jane').one!
+        joe = container.relation(:users).as(:model).by_name('Joe').one!
 
         result = commands.try { commands.delete.by_name('Joe') }
 
@@ -121,7 +121,7 @@ describe 'Mongo gateway' do
              'email' => 'joe@doe.org' }]
         )
 
-        expect(rom.relation(:users).as(:model).all).to match_array([jane])
+        expect(container.relation(:users).as(:model).all).to match_array([jane])
       end
     end
   end

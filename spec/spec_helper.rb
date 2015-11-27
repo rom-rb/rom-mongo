@@ -21,5 +21,3 @@ RSpec.configure do |config|
     added_constants.each { |name| Object.send(:remove_const, name) }
   end
 end
-
-ROM.use :auto_registration
