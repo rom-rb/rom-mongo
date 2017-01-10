@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'rom', git: 'https://github.com/rom-rb/rom.git', branch: 'master'
+
 group :test do
   gem 'inflecto'
   gem 'rspec', '~> 3.1'
