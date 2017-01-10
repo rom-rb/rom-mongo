@@ -1,25 +1,25 @@
 language: ruby
-sudo: false
+dist: trusty
+sudo: required
 cache: bundler
+services:
+  - mongodb
 bundler_args: --without yard guard benchmarks tools
+after_success:
+  - '[ "$TRAVIS_RUBY_VERSION" = "2.3.1" ] && [ "$TRAVIS_BRANCH" = "master" ] && bundle exec codeclimate-test-reporter'
+script: "bundle exec rake ci"
+rvm:
+  - 2.2.5
+  - 2.3.1
+  - 2.4.0
+  - rbx-3
+  - jruby
 env:
   global:
     - JRUBY_OPTS='--dev -J-Xmx1024M'
-    - CODECLIMATE_REPO_TOKEN=886f3b795e74159719804f8e18b853f4c23a81bd814404e52ec248a0dae6d656
-script: "bundle exec rake ci"
-rvm:
-  - 2.0
-  - 2.1
-  - rbx-2
-  - jruby-9000
-  - jruby-head
-  - ruby-head
 matrix:
   allow_failures:
-    - rvm: ruby-head
-    - rvm: jruby-head
-services:
-  - mongodb
+    - rvm: rbx
 notifications:
   webhooks:
     urls:
