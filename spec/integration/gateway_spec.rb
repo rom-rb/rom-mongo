@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rom-repository'
 
 require 'virtus'
 
@@ -14,6 +15,12 @@ describe 'Mongo gateway' do
 
   before do
     configuration.relation(:users) do
+      schema do
+        attribute :_id, ROM::Types.Definition(BSON::ObjectId)
+        attribute :name, ROM::Types::String
+        attribute :email, ROM::Types::String
+      end
+
       def by_name(name)
         find(name: name)
       end
@@ -61,6 +68,23 @@ describe 'Mongo gateway' do
 
       expect(jane.id)
         .to eql(container.relation(:users) { |r| r.find(name: 'Jane') }.one['_id'].to_s)
+
+      expect(jane.name).to eql('Jane')
+      expect(jane.email).to eql('jane@doe.org')
+    end
+  end
+
+  describe 'with a repository' do
+    let(:repo) do
+      Class.new(ROM::Repository[:users]).new(container)
+    end
+
+    it 'returns auto-mapped structs' do
+      jane = repo.users.by_name('Jane').one!
+
+      expect(jane._id.to_s)
+        .to eql(container.relation(:users) { |r| r.find(name: 'Jane') }.one['_id'].to_s)
+
       expect(jane.name).to eql('Jane')
       expect(jane.email).to eql('jane@doe.org')
     end

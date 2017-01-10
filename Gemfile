@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rom', git: 'https://github.com/rom-rb/rom.git', branch: 'master'
+gem 'rom-repository', git: 'https://github.com/rom-rb/rom-repository.git', branch: 'master'
 
 group :test do
   gem 'inflecto'
