@@ -16,6 +16,7 @@ describe 'Mongo gateway' do
   before do
     configuration.relation(:users) do
       schema do
+        # TODO: we need ROM::Mongo::Types (similar to ROM::SQL::Types)
         attribute :_id, ROM::Types.Definition(BSON::ObjectId)
         attribute :name, ROM::Types::String
         attribute :email, ROM::Types::String
