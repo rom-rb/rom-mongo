@@ -8,7 +8,7 @@ gem 'rom-repository', git: 'https://github.com/rom-rb/rom-repository.git', branc
 group :test do
   gem 'inflecto'
   gem 'rspec', '~> 3.1'
-  gem 'codeclimate-test-reporter', require: false
+  gem 'codeclimate-test-reporter', require: false, platforms: :mri
   gem 'virtus'
 end
 

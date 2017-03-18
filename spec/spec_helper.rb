@@ -1,8 +1,8 @@
-# encoding: utf-8
-
-if RUBY_ENGINE == 'rbx'
-  require "codeclimate-test-reporter"
-  CodeClimate::TestReporter.start
+if ENV['COVERAGE'] == 'true' && RUBY_ENGINE == 'ruby' && RUBY_VERSION == '2.4.0'
+  require "simplecov"
+  SimpleCov.start do
+    add_filter '/spec/'
+  end
 end
 
 require 'rom-mongo'

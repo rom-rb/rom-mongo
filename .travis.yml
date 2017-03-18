@@ -6,20 +6,21 @@ services:
   - mongodb
 bundler_args: --without yard guard benchmarks tools
 after_success:
-  - '[ "$TRAVIS_RUBY_VERSION" = "2.3.1" ] && [ "$TRAVIS_BRANCH" = "master" ] && bundle exec codeclimate-test-reporter'
+  - '[ "${TRAVIS_JOB_NUMBER#*.}" = "1" ] && [ "$TRAVIS_BRANCH" = "master" ] && bundle exec codeclimate-test-reporter'
 script: "bundle exec rake ci"
 rvm:
-  - 2.2.5
-  - 2.3.1
   - 2.4.0
+  - 2.3.3
+  - 2.2.6
   - rbx-3
   - jruby
 env:
   global:
     - JRUBY_OPTS='--dev -J-Xmx1024M'
+    - COVERAGE='true'
 matrix:
   allow_failures:
-    - rvm: rbx
+    - rvm: rbx-3
 notifications:
   webhooks:
     urls:
