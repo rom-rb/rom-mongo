@@ -13,13 +13,15 @@ root = Pathname(__FILE__).dirname
 
 Dir[root.join('shared/*.rb').to_s].each { |f| require f }
 
-RSpec.configure do |config|
-  config.before do
-    @constants = Object.constants
+# Namespace holding all objects created during specs
+module Test
+  def self.remove_constants
+    constants.each(&method(:remove_const))
   end
+end
 
+RSpec.configure do |config|
   config.after do
-    added_constants = Object.constants - @constants
-    added_constants.each { |name| Object.send(:remove_const, name) }
+    Test.remove_constants
   end
 end
