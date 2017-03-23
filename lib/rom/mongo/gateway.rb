@@ -9,6 +9,8 @@ require 'rom/mongo/commands'
 module ROM
   module Mongo
     class Gateway < ROM::Gateway
+      adapter :mongo
+
       attr_reader :collections
 
       def initialize(uri)
