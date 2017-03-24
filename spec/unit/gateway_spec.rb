@@ -2,7 +2,7 @@ require 'spec_helper'
 
 require 'rom/lint/spec'
 
-describe ROM::Mongo::Gateway do
+RSpec.describe ROM::Mongo::Gateway do
   it_behaves_like 'a rom gateway' do
     let(:identifier) { :mongo }
     let(:gateway) { ROM::Mongo::Gateway }

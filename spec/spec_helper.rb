@@ -11,8 +11,6 @@ Mongo::Logger.logger = Logger.new(nil)
 
 root = Pathname(__FILE__).dirname
 
-Dir[root.join('shared/*.rb').to_s].each { |f| require f }
-
 # Namespace holding all objects created during specs
 module Test
   def self.remove_constants
@@ -21,7 +19,11 @@ module Test
 end
 
 RSpec.configure do |config|
+  config.disable_monkey_patching!
+
   config.after do
     Test.remove_constants
   end
 end
+
+Dir[root.join('shared/*.rb').to_s].each { |f| require f }

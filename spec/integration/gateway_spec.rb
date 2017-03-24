@@ -3,7 +3,7 @@ require 'rom-repository'
 
 require 'virtus'
 
-describe 'Mongo gateway' do
+RSpec.describe 'Mongo gateway' do
   subject(:container) { ROM.container(configuration) }
 
   let(:configuration) { ROM::Configuration.new(:mongo, 'mongodb://127.0.0.1:27017/test') }
