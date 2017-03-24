@@ -20,7 +20,9 @@ RSpec.describe 'Mongo gateway' do
 
   describe 'with a repository' do
     let(:repo) do
-      Class.new(ROM::Repository[:users]).new(container)
+      Class.new(ROM::Repository[:users]) do
+        commands :create, update: :by_pk
+      end.new(container)
     end
 
     it 'returns auto-mapped structs' do
@@ -31,6 +33,12 @@ RSpec.describe 'Mongo gateway' do
 
       expect(jane.name).to eql('Jane')
       expect(jane.email).to eql('jane@doe.org')
+    end
+
+    it 'uses #by_pk for update commands' do
+      repo.update(jane_id, name: 'Jane Doe')
+
+      expect(repo.users.by_pk(jane_id).one!.name).to eql('Jane Doe')
     end
   end
 

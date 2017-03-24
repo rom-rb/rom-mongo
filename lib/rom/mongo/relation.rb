@@ -3,6 +3,13 @@ require 'rom/plugins/relation/key_inference'
 module ROM
   module Mongo
     class Relation < ROM::Relation
+      # @api private
+      def self.inherited(klass)
+        super
+
+        klass.auto_curry :by_pk
+      end
+
       adapter :mongo
 
       use :key_inference
