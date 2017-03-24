@@ -1,4 +1,8 @@
-## v0.1.1 to-be-release
+## v0.2.0 to-be-release
+
+### Added
+
+* Added `Relation#by_pk` for compability with `rom-repo`'s command compiler (flash-gordon)
 
 ### Changed
 
