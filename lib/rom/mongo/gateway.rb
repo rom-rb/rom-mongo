@@ -14,7 +14,7 @@ module ROM
       attr_reader :collections
 
       def initialize(uri)
-        @connection = ::Mongo::Client.new(uri)
+        @connection = uri.is_a?(::Mongo::Client) ? uri : ::Mongo::Client.new(uri)
         @collections = {}
       end
 

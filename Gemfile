@@ -9,6 +9,7 @@ group :test do
   gem 'inflecto'
   gem 'codeclimate-test-reporter', require: false, platforms: :mri
   gem 'virtus'
+  gem 'byebug', platforms: :mri
 end
 
 group :tools do
