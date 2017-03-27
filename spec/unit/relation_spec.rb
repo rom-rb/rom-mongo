@@ -1,4 +1,5 @@
 RSpec.describe ROM::Mongo::Relation do
+  include_context 'database'
   include_context 'users'
 
   describe '#by_pk' do

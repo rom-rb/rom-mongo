@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'rom-repository'
 
 RSpec.describe 'Mongo gateway' do
+  include_context 'database'
   include_context 'users'
 
   let(:gateway) { container.gateways[:default] }
