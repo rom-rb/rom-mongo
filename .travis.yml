@@ -6,12 +6,12 @@ services:
   - mongodb
 bundler_args: --without yard guard benchmarks tools
 after_success:
-  - '[ "${TRAVIS_JOB_NUMBER#*.}" = "1" ] && [ "$TRAVIS_BRANCH" = "master" ] && bundle exec codeclimate-test-reporter'
+  - '[ -d coverage ] && bundle exec codeclimate-test-reporter'
 script: "bundle exec rake ci"
 rvm:
-  - 2.4.1
-  - 2.3.3
   - 2.2.6
+  - 2.3.3
+  - 2.4.1
   - rbx-3
   - jruby
 env:
