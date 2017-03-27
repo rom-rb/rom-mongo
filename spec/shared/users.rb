@@ -1,4 +1,4 @@
-require 'virtus'
+require 'dry-struct'
 
 RSpec.shared_context 'users' do
   let(:users) { container.relation(:users) }
@@ -30,14 +30,10 @@ RSpec.shared_context 'users' do
       define(:delete)
     end
 
-    user_model = Class.new do
-      include Virtus.value_object
-
-      values do
-        attribute :id, String
-        attribute :name, String
-        attribute :email, String
-      end
+    user_model = Class.new(Dry::Struct) do
+      attribute :id, 'coercible.string'
+      attribute :name, 'strict.string'
+      attribute :email, 'strict.string'
     end
 
     configuration.mappers do
