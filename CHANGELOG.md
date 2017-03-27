@@ -3,6 +3,7 @@
 ### Added
 
 * Added `Relation#by_pk` for compability with `rom-repo`'s command compiler (flash-gordon)
+* Support fot inferring relations from collection list (flash-gordon)
 
 ### Changed
 
