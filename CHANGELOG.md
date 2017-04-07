@@ -1,9 +1,10 @@
-## v0.2.0 to-be-release
+## v0.2.0 to-be-released
 
 ### Added
 
 * Added `Relation#by_pk` for compability with `rom-repo`'s command compiler (flash-gordon)
 * Support fot inferring relations from collection list (flash-gordon)
+* Support for ordered queries with `Relation#order` (flash-gordon)
 
 ### Changed
 
