@@ -2,14 +2,14 @@
 
 ### Added
 
-* Added `Relation#by_pk` for compability with `rom-repo`'s command compiler (flash-gordon)
-* Support fot inferring relations from collection list (flash-gordon)
+* Added `Relation#by_pk` for compatibility with `rom-repo`'s command compiler (flash-gordon)
+* Support for inferring relations from collection list (flash-gordon)
 * Support for ordered queries with `Relation#order` (flash-gordon)
 
 ### Changed
 
 * Updated to use official mongo driver (kwando)
-* `Dataset` uses origin's querable interface now rather than forwarding to collection (kwando)
+* `Dataset` uses origin's queryable interface now rather than forwarding to collection (kwando)
 
 [Compare v0.1.0...v0.2.0](https://github.com/rom-rb/rom-mongo/compare/v0.1.0...v0.2.0)
 
