@@ -14,7 +14,7 @@ module ROM
 
       use :key_inference
 
-      forward :insert, :find, :only, :without, :skip, :limit, :where
+      forward :insert, :find, :only, :without, :skip, :limit, :where, :order
 
       # @!method by_pk(id)
       #   Return a relation restricted by _id

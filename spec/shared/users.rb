@@ -49,6 +49,6 @@ RSpec.shared_context 'users' do
     end
 
     container.relations.users.insert(_id: jane_id, name: 'Jane', email: 'jane@doe.org')
-    container.relations.users.insert(name: 'Joe', email: 'joe@doe.org')
+    container.relations.users.insert(name: 'Joe', email: 'a.joe@doe.org')
   end
 end

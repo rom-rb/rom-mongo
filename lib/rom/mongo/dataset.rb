@@ -61,6 +61,10 @@ module ROM
         dataset(criteria.skip(value))
       end
 
+      def order(value)
+        dataset(criteria.order(value))
+      end
+
       private
 
       def view
@@ -75,7 +79,7 @@ module ROM
       #
       # @api private
       def with_options(view, options)
-        map = {fields: :projection}
+        map = { fields: :projection }
         options.each do |option, value|
           option = map.fetch(option, option)
           view = view.send(option, value) if view.respond_to?(option)

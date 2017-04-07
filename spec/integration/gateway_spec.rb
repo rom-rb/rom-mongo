@@ -61,11 +61,11 @@ RSpec.describe 'Mongo gateway' do
         id = BSON::ObjectId.new
 
         result = commands.try do
-          commands.create.call(_id: id, name: 'joe', email: 'joe@doe.org')
+          commands.create.call(_id: id, name: 'joe', email: 'a.joe@doe.org')
         end
 
         expect(result)
-          .to match_array([{ _id: id, name: 'joe', email: 'joe@doe.org' }])
+          .to match_array([{ _id: id, name: 'joe', email: 'a.joe@doe.org' }])
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Mongo gateway' do
         expect(result).to match_array(
           [{ '_id' => BSON::ObjectId.from_string(joe.id),
              'name' => 'Joe',
-             'email' => 'joe@doe.org' }]
+             'email' => 'a.joe@doe.org' }]
         )
 
         expect(container.relation(:users).as(:model).all).to match_array([jane])

@@ -12,4 +12,22 @@ RSpec.describe ROM::Mongo::Relation do
            )
     end
   end
+
+  describe '#order' do
+    it 'sorts documents' do
+      expect(users.order(name: :asc).only(:name).without(:_id).to_a).
+        to eql([{'name' => 'Jane',}, {'name' => 'Joe'}])
+
+      expect(users.order(name: :desc).only(:name).without(:_id).to_a).
+        to eql([{'name' => 'Joe',}, {'name' => 'Jane'}])
+    end
+
+    it 'supports mutli-field sorting' do
+      expect(users.order(name: :asc, email: :asc).only(:name).without(:_id).to_a).
+        to eql([{'name' => 'Jane',}, {'name' => 'Joe'}])
+
+      expect(users.order(email: :asc, name: :asc).only(:name).without(:_id).to_a).
+        to eql([{'name' => 'Joe',}, {'name' => 'Jane'}])
+    end
+  end
 end
