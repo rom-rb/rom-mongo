@@ -29,6 +29,11 @@ module ROM
         view.each { |doc| yield(doc) }
       end
 
+      # @api private
+      def map(&block)
+        to_a.map(&block)
+      end
+
       def insert(data)
         collection.insert_one(data)
       end

@@ -1,4 +1,4 @@
-require 'rom'
+require 'rom/core'
 
 require 'rom/mongo/version'
 require 'rom/mongo/relation'
