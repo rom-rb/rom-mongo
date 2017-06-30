@@ -1,20 +1,32 @@
-require 'rom/plugins/relation/key_inference'
+require 'rom/relation'
+require 'rom/mongo/struct'
+require 'rom/mongo/schema'
 
 module ROM
   module Mongo
     class Relation < ROM::Relation
-      # @api private
-      def self.inherited(klass)
-        super
-
-        klass.auto_curry :by_pk
-      end
-
       adapter :mongo
 
-      use :key_inference
+      struct_namespace ROM::Mongo
 
-      forward :insert, :find, :only, :without, :skip, :limit, :where, :order
+      schema_class Mongo::Schema
+
+      forward :insert, :find, :skip, :limit, :where, :order
+
+      # @api private
+      def self.view_methods
+        super + [:by_pk]
+      end
+
+      # @api public
+      def only(*fields)
+        schema.project(*fields).(self)
+      end
+
+      # @api public
+      def without(*fields)
+        schema.project(*(schema.map(&:name) - fields)).(self)
+      end
 
       # @!method by_pk(id)
       #   Return a relation restricted by _id
@@ -24,7 +36,7 @@ module ROM
       #   @return [Mongo::Relation]
       #
       #   @api public
-      def by_pk(id)
+      auto_curry def by_pk(id)
         find(_id: id)
       end
     end

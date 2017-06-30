@@ -1,13 +1,15 @@
 require 'dry-struct'
 
 RSpec.shared_context 'users' do
-  let(:users) { container.relation(:users) }
+  let(:users) { container.relations[:users] }
   let(:jane_id) { BSON::ObjectId.new }
 
   before do
     connection[:users].drop
 
     configuration.relation(:users) do
+      auto_struct true
+
       schema do
         # TODO: we need ROM::Mongo::Types (similar to ROM::SQL::Types)
         attribute :_id, ROM::Types.Definition(BSON::ObjectId)
@@ -30,25 +32,7 @@ RSpec.shared_context 'users' do
       define(:delete)
     end
 
-    user_model = Class.new(Dry::Struct) do
-      attribute :id, 'coercible.string'
-      attribute :name, 'strict.string'
-      attribute :email, 'strict.string'
-    end
-
-    configuration.mappers do
-      define(:users) do
-        model(user_model)
-
-        register_as :model
-
-        attribute :id, from: '_id'
-        attribute :name, from: 'name'
-        attribute :email, from: 'email'
-      end
-    end
-
-    container.relations.users.insert(_id: jane_id, name: 'Jane', email: 'jane@doe.org')
-    container.relations.users.insert(name: 'Joe', email: 'a.joe@doe.org')
+    users.insert(_id: jane_id, name: 'Jane', email: 'jane@doe.org')
+    users.insert(name: 'Joe', email: 'a.joe@doe.org')
   end
 end

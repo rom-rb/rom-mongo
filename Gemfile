@@ -2,8 +2,13 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'rom', git: 'https://github.com/rom-rb/rom.git', branch: 'master'
-gem 'rom-repository', git: 'https://github.com/rom-rb/rom-repository.git', branch: 'master'
+gem 'dry-types', git: 'https://github.com/dry-rb/dry-types', branch: 'master'
+
+gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
+  gem 'rom-core'
+  gem 'rom-mapper'
+  gem 'rom-repository', group: :tools
+end
 
 group :test do
   gem 'inflecto'
